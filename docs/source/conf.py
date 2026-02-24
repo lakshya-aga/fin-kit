@@ -74,5 +74,5 @@ html_static_path = ['_static']
 html_copy_source = True
 
 # 'releases' (changelog) settings
-releases_github_path = 'hudson-and-thames/mlfinlab_premium'
+# releases_github_path = 'hudson-and-thames/mlfinlab_premium'
 releases_unstable_prehistory = True
