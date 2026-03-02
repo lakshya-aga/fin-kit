@@ -21,7 +21,7 @@ getmac>=0.8.0
 
 
 # Develop
-codecov==2.1.11
+# codecov uploader intentionally omitted for Python >=3.12
 coverage==5.4
 pylint==2.6.0
 sphinx==3.4.3 # Docs
