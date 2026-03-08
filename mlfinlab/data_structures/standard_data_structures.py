@@ -65,7 +65,8 @@ class StandardBars(BaseBars):
         :return: (list) Extracted bars
         """
         list_bars = []
-        for date_time, price, volume in data:
+        rows = data.values if hasattr(data, "values") else data
+        for date_time, price, volume in rows:
             if self.open_price is None:
                 self.open_price = price
                 self.high_price = price

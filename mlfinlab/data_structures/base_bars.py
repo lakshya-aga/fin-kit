@@ -362,7 +362,8 @@ class BaseRunBars(BaseBars):
         :return: (list) of bars built using the current batch.
         """
         list_bars = []
-        for date_time, price, volume in data:
+        rows = data.values if hasattr(data, "values") else data
+        for date_time, price, volume in rows:
             if self.open_price is None:
                 self.open_price = price
                 self.high_price = price

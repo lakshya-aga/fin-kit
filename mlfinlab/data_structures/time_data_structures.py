@@ -62,7 +62,8 @@ class TimeBars(BaseBars):
         :return: (list) Extracted bars
         """
         list_bars = []
-        for date_time, price, volume in data:
+        rows = data.values if hasattr(data, "values") else data
+        for date_time, price, volume in rows:
             dt = pd.Timestamp(date_time)
             if self.next_bar_time is None:
                 self.next_bar_time = dt + self.delta
