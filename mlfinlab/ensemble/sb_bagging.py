@@ -14,7 +14,17 @@ from sklearn.ensemble._bagging import BaseBagging
 from sklearn.ensemble._base import _partition_estimators
 from sklearn.base import ClassifierMixin, RegressorMixin
 from sklearn.utils.random import sample_without_replacement
-from sklearn.utils import indices_to_mask
+try:
+    from sklearn.utils import indices_to_mask
+except ImportError:
+    try:
+        from sklearn.utils._mask import indices_to_mask
+    except Exception:
+        def indices_to_mask(indices, mask_length):
+            """Compatibility fallback for newer sklearn layouts."""
+            mask = np.zeros(mask_length, dtype=bool)
+            mask[np.asarray(indices, dtype=int)] = True
+            return mask
 from sklearn.metrics import accuracy_score, r2_score
 from sklearn.utils.validation import has_fit_parameter
 from sklearn.utils import check_random_state, check_array, check_consistent_length, check_X_y
