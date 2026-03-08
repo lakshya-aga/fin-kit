@@ -28,7 +28,10 @@ except ImportError:
 from sklearn.metrics import accuracy_score, r2_score
 from sklearn.utils.validation import has_fit_parameter
 from sklearn.utils import check_random_state, check_array, check_consistent_length, check_X_y
-from sklearn.utils._joblib import Parallel, delayed
+try:
+    from sklearn.utils._joblib import Parallel, delayed
+except Exception:
+    from joblib import Parallel, delayed
 
 from mlfinlab.sampling.bootstrapping import seq_bootstrap, get_ind_matrix
 
