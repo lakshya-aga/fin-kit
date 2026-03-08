@@ -5,24 +5,38 @@ reproducible, interpretable, and easy to use tools.
 Adding MlFinLab to your companies pipeline is like adding a department of PhD researchers to your team.
 """
 
-import mlfinlab.cross_validation as cross_validation
-import mlfinlab.data_structures as data_structures
-import mlfinlab.datasets as datasets
-import mlfinlab.multi_product as multi_product
-import mlfinlab.filters.filters as filters
-import mlfinlab.labeling as labeling
-import mlfinlab.features.fracdiff as fracdiff
-import mlfinlab.sample_weights as sample_weights
-import mlfinlab.sampling as sampling
-import mlfinlab.bet_sizing as bet_sizing
-import mlfinlab.util as util
-import mlfinlab.structural_breaks as structural_breaks
-import mlfinlab.feature_importance as feature_importance
-import mlfinlab.ensemble as ensemble
-import mlfinlab.clustering as clustering
-import mlfinlab.microstructural_features as microstructural_features
-import mlfinlab.backtest_statistics.backtests as backtests
-import mlfinlab.backtest_statistics.statistics as backtest_statistics
-import mlfinlab.networks as networks
-import mlfinlab.data_generation as data_generation
-import mlfinlab.regression as regression
+"""Lightweight top-level imports.
+
+Historically mlfinlab imported almost every submodule at package import time,
+which makes `import mlfinlab.data_structures` fragile on modern Python/sklearn
+setups due to optional/legacy dependencies in unrelated modules.
+
+Keep the package import minimal and let users import submodules explicitly.
+"""
+
+from . import cross_validation
+from . import data_structures
+from . import datasets
+from . import multi_product
+from .filters import filters
+from . import labeling
+from .features import fracdiff
+from . import sample_weights
+from . import sampling
+from . import bet_sizing
+from . import util
+from . import structural_breaks
+from . import feature_importance
+from . import clustering
+from . import microstructural_features
+from .backtest_statistics import backtests
+from .backtest_statistics import statistics as backtest_statistics
+from . import networks
+from . import data_generation
+from . import regression
+
+# Ensemble has tight sklearn coupling across versions; keep optional.
+try:
+    from . import ensemble
+except Exception:  # pragma: no cover
+    ensemble = None
