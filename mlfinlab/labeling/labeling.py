@@ -123,7 +123,10 @@ def get_events(close, t_events, pt_sl, target, min_ret, num_threads, vertical_ba
     df0 = mp_pandas_obj(apply_pt_sl_on_t1, ('molecule', events.index), num_threads,
                         close=close, events=events, pt_sl=pt_sl, verbose=verbose)
     if df0 is not None and len(df0) > 0:
-        events['t1'] = df0.min(axis=1)
+        # Multiprocessing returns object-typed columns with a mix of Timestamp/NaN.
+        # Coerce to datetime first so row-wise min ignores missing values safely.
+        df0 = df0.apply(pd.to_datetime, errors='coerce')
+        events['t1'] = df0.min(axis=1, skipna=True)
     return events
 
 
