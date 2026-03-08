@@ -4,13 +4,17 @@ The inspiration and context for this code was from a blog post by writen by Maks
 https://towardsdatascience.com/financial-machine-learning-part-0-bars-745897d4e4ba
 """
 
+import os
 import numpy as np
 
-try:
-    from numba import jit, float64, int64
-    _NUMBA_OK = True
-except Exception:  # pragma: no cover
-    _NUMBA_OK = False
+# Opt-in only: avoids numba import hangs on some Python/conda stacks.
+_NUMBA_OK = False
+if os.environ.get("FIN_KIT_USE_NUMBA", "0") == "1":
+    try:
+        from numba import jit, float64, int64
+        _NUMBA_OK = True
+    except Exception:  # pragma: no cover
+        _NUMBA_OK = False
 
 
 def _ewma_impl(arr_in, window):
